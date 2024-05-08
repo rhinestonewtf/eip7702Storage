@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-contract Storage {
+contract EIP7702Storage {
     mapping(bytes32 => mapping(address account => string)) stringStorage;
     mapping(bytes32 => mapping(address account => bytes)) bytesStorage;
     mapping(bytes32 => mapping(address account => uint256)) uintStorage;
