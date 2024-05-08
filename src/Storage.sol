@@ -2,131 +2,95 @@
 pragma solidity >=0.8.0;
 
 contract Storage {
-    struct Records {
-        // Storage maps
-        mapping(bytes32 => string) stringStorage;
-        mapping(bytes32 => bytes) bytesStorage;
-        mapping(bytes32 => uint256) uintStorage;
-        mapping(bytes32 => int256) intStorage;
-        mapping(bytes32 => address) addressStorage;
-        mapping(bytes32 => bool) booleanStorage;
-        mapping(bytes32 => bytes32) bytes32Storage;
+    mapping(bytes32 => mapping(address account => string)) stringStorage;
+    mapping(bytes32 => mapping(address account => bytes)) bytesStorage;
+    mapping(bytes32 => mapping(address account => uint256)) uintStorage;
+    mapping(bytes32 => mapping(address account => int256)) intStorage;
+    mapping(bytes32 => mapping(address account => address)) addressStorage;
+    mapping(bytes32 => mapping(address account => bool)) booleanStorage;
+    mapping(bytes32 => mapping(address account => bytes32)) bytes32Storage;
+
+    function getAddress(bytes32 _key) external view returns (address r) {
+        return addressStorage[_key][msg.sender];
     }
 
-    mapping(address account => Records records) internal records;
-
-    function getAddress(address account, bytes32 _key) external view returns (address r) {
-        Records storage record = records[account];
-        return record.addressStorage[_key];
+    function getUint(bytes32 _key) external view returns (uint256 r) {
+        return uintStorage[_key][msg.sender];
     }
 
-    function getUint(address account, bytes32 _key) external view returns (uint256 r) {
-        Records storage record = records[account];
-        return record.uintStorage[_key];
+    function getString(bytes32 _key) external view returns (string memory) {
+        return stringStorage[_key][msg.sender];
     }
 
-    function getString(address account, bytes32 _key) external view returns (string memory) {
-        Records storage record = records[account];
-        return record.stringStorage[_key];
+    function getBytes(bytes32 _key) external view returns (bytes memory) {
+        return bytesStorage[_key][msg.sender];
     }
 
-    function getBytes(address account, bytes32 _key) external view returns (bytes memory) {
-        Records storage record = records[account];
-        return record.bytesStorage[_key];
+    function getBool(bytes32 _key) external view returns (bool r) {
+        return booleanStorage[_key][msg.sender];
     }
 
-    function getBool(address account, bytes32 _key) external view returns (bool r) {
-        Records storage record = records[account];
-        return record.booleanStorage[_key];
+    function getInt(bytes32 _key) external view returns (int256 r) {
+        return intStorage[_key][msg.sender];
     }
 
-    function getInt(address account, bytes32 _key) external view returns (int256 r) {
-        Records storage record = records[account];
-        return record.intStorage[_key];
-    }
-
-    function getBytes32(address account, bytes32 _key) external view returns (bytes32 r) {
-        Records storage record = records[account];
-        return record.bytes32Storage[_key];
+    function getBytes32(bytes32 _key) external view returns (bytes32 r) {
+        return bytes32Storage[_key][msg.sender];
     }
 
     function setAddress(bytes32 _key, address _value) external {
-        Records storage record = records[msg.sender];
-        record.addressStorage[_key] = _value;
+        addressStorage[_key][msg.sender] = _value;
     }
 
     function setUint(bytes32 _key, uint256 _value) external {
-        Records storage record = records[msg.sender];
-        record.uintStorage[_key] = _value;
+        uintStorage[_key][msg.sender] = _value;
     }
 
     function setString(bytes32 _key, string calldata _value) external {
-        Records storage record = records[msg.sender];
-        record.stringStorage[_key] = _value;
+        stringStorage[_key][msg.sender] = _value;
     }
 
     function setBytes(bytes32 _key, bytes calldata _value) external {
-        Records storage record = records[msg.sender];
-        record.bytesStorage[_key] = _value;
+        bytesStorage[_key][msg.sender] = _value;
     }
 
     function setBool(bytes32 _key, bool _value) external {
-        Records storage record = records[msg.sender];
-        record.booleanStorage[_key] = _value;
+        booleanStorage[_key][msg.sender] = _value;
     }
 
     function setInt(bytes32 _key, int256 _value) external {
-        Records storage record = records[msg.sender];
-        record.intStorage[_key] = _value;
+        intStorage[_key][msg.sender] = _value;
     }
 
     function setBytes32(bytes32 _key, bytes32 _value) external {
-        Records storage record = records[msg.sender];
-        record.bytes32Storage[_key] = _value;
+        bytes32Storage[_key][msg.sender] = _value;
     }
 
     function deleteAddress(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.addressStorage[_key];
+        delete addressStorage[_key][msg.sender];
     }
 
     function deleteUint(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.uintStorage[_key];
+        delete uintStorage[_key][msg.sender];
     }
 
     function deleteString(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.stringStorage[_key];
+        delete stringStorage[_key][msg.sender];
     }
 
     function deleteBytes(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.bytesStorage[_key];
+        delete bytesStorage[_key][msg.sender];
     }
 
     function deleteBool(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.booleanStorage[_key];
+        delete booleanStorage[_key][msg.sender];
     }
 
     function deleteInt(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.intStorage[_key];
+        delete intStorage[_key][msg.sender];
     }
 
     function deleteBytes32(bytes32 _key) external {
-        Records storage record = records[msg.sender];
-        delete record.bytes32Storage[_key];
-    }
-
-    function addUint(bytes32 _key, uint256 _amount) external {
-        Records storage record = records[msg.sender];
-        record.uintStorage[_key] = record.uintStorage[_key].add(_amount);
-    }
-
-    function subUint(bytes32 _key, uint256 _amount) external {
-        Records storage record = records[msg.sender];
-        record.uintStorage[_key] = record.uintStorage[_key].sub(_amount);
+        delete bytes32Storage[_key][msg.sender];
     }
 }
