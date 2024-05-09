@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0;
-
-import "forge-std/console2.sol";
+pragma solidity ^0.8.25;
 
 /**
  * @title RDataStorage
@@ -20,11 +18,12 @@ contract RDataStorage {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                        Get Values                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
-    function getAddress(bytes32 _key) external view returns (address r) {
+
+    function getAddress(bytes32 _key) external view returns (address) {
         return addressStorage[_key][msg.sender];
     }
 
-    function getUint(bytes32 _key) external view returns (uint256 r) {
+    function getUint(bytes32 _key) external view returns (uint256) {
         return uintStorage[_key][msg.sender];
     }
 
@@ -36,21 +35,22 @@ contract RDataStorage {
         return bytesStorage[_key][msg.sender];
     }
 
-    function getBool(bytes32 _key) external view returns (bool r) {
+    function getBool(bytes32 _key) external view returns (bool) {
         return booleanStorage[_key][msg.sender];
     }
 
-    function getInt(bytes32 _key) external view returns (int256 r) {
+    function getInt(bytes32 _key) external view returns (int256) {
         return intStorage[_key][msg.sender];
     }
 
-    function getBytes32(bytes32 _key) external view returns (bytes32 r) {
+    function getBytes32(bytes32 _key) external view returns (bytes32) {
         return bytes32Storage[_key][msg.sender];
     }
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                        Set Values                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function setAddress(bytes32 _key, address _value) external {
         addressStorage[_key][msg.sender] = _value;
     }
@@ -82,6 +82,7 @@ contract RDataStorage {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                       Delete Values                        */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function deleteAddress(bytes32 _key) external {
         delete addressStorage[_key][msg.sender];
     }
@@ -113,6 +114,7 @@ contract RDataStorage {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                         Operation                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function addUint(bytes32 _key, uint256 _value) external {
         uintStorage[_key][msg.sender] += _value;
     }

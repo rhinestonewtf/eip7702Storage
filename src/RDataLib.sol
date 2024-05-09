@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0;
+pragma solidity ^0.8.25;
 
 import { RDataStorage } from "./RDataStorage.sol";
 
 /**
  * @title RData
  * @dev Library for storing and loading data from RDataStorage
- * using structs , since we can have 'storage' keyword in the function
+ * using structs, since we can have 'storage' keyword in the function
  * signature and thus access .slot in assembly
  * @author rhinestone | zeroknots.eth
  */
@@ -39,13 +39,13 @@ library RData {
         string str;
     }
 
-    // NOTE: right now expects that the storage contract is etched to the address
-    // shall be replaced to prod address once on testnet / mainnet
-    RDataStorage constant storageContract = RDataStorage(address(0x4411BBAA));
+    // NOTE: shall be replaced to prod address once on testnet / mainnet
+    RDataStorage constant storageContract = RDataStorage(address(0x9C6BADB7C78CDD905804a55d624deb34dCAdC27A));
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                           Bytes32                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function store(Bytes32 storage str, bytes32 data) internal {
         bytes32 _slot;
         assembly {
@@ -65,6 +65,7 @@ library RData {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                           Address                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function store(Address storage str, address data) internal {
         bytes32 _slot;
         assembly {
@@ -101,7 +102,7 @@ library RData {
         storageContract.subUint(_slot, data);
     }
 
-    function increase(Uint256 storage str) internal {
+    function increment(Uint256 storage str) internal {
         bytes32 _slot;
         assembly {
             _slot := str.slot
@@ -109,7 +110,7 @@ library RData {
         storageContract.incUint(_slot);
     }
 
-    function decrease(Uint256 storage str) internal {
+    function decrement(Uint256 storage str) internal {
         bytes32 _slot;
         assembly {
             _slot := str.slot
@@ -152,6 +153,7 @@ library RData {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                           Boolean                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function store(Bool storage str, bool data) internal {
         bytes32 _slot;
         assembly {
@@ -179,6 +181,7 @@ library RData {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                           Bytes                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function store(Bytes storage str, bytes memory data) internal {
         bytes32 _slot;
         assembly {
@@ -198,6 +201,7 @@ library RData {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                           String                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
     function store(String storage str, string memory data) internal {
         bytes32 _slot;
         assembly {

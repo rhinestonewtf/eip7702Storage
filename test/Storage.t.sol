@@ -2,8 +2,8 @@
 pragma solidity >=0.8.0;
 
 import "forge-std/Test.sol";
-import "src/RDataStorage.sol";
-import "src/RdataLib.sol";
+import { RDataStorage } from "src/RDataStorage.sol";
+import { RData } from "src/RdataLib.sol";
 
 contract StorageTest is Test {
     using RData for *;
@@ -15,8 +15,10 @@ contract StorageTest is Test {
     mapping(address module => RData.Uint256) internal uints;
 
     function setUp() public virtual {
-        storageContract = new RDataStorage();
+        bytes32 salt = keccak256(abi.encodePacked("RDataStorage"));
+        storageContract = new RDataStorage{ salt: salt }();
 
+        // in case the address of rdataStorage changes
         vm.etch(address(RData.storageContract), address(storageContract).code);
     }
 
@@ -47,10 +49,10 @@ contract StorageTest is Test {
         uints[key].add(10);
         _value = uints[key].load();
         assertEq(value + 10, _value);
-        uints[key].increase();
+        uints[key].increment();
         _value = uints[key].load();
         assertEq(value + 11, _value);
-        uints[key].decrease();
+        uints[key].decrement();
         _value = uints[key].load();
         assertEq(value + 10, _value);
     }
