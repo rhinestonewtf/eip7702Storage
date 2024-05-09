@@ -6,7 +6,7 @@ import {RDataStorage} from "./RDataStorage.sol";
 /**
  * @title RData
  * @dev Library for storing and loading data from RDataStorage
- * using structs here, since we can have 'storage' keyword in the function
+ * using structs , since we can have 'storage' keyword in the function
  * signature and thus access .slot in assembly
  * @author rhinestone | zeroknots.eth
  */
