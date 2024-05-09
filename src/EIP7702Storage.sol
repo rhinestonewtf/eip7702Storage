@@ -1,14 +1,58 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-contract EIP7702Storage {
-    mapping(bytes32 => mapping(address account => string)) stringStorage;
-    mapping(bytes32 => mapping(address account => bytes)) bytesStorage;
-    mapping(bytes32 => mapping(address account => uint256)) uintStorage;
-    mapping(bytes32 => mapping(address account => int256)) intStorage;
-    mapping(bytes32 => mapping(address account => address)) addressStorage;
-    mapping(bytes32 => mapping(address account => bool)) booleanStorage;
-    mapping(bytes32 => mapping(address account => bytes32)) bytes32Storage;
+library RData {
+    struct Bytes32 {
+        bytes32 b32;
+    }
+
+    struct Address {
+        address addr;
+    }
+
+    RDataStorage constant storageContract = RDataStorage(address(0x4411BBAA));
+
+    function store(Bytes32 storage str, bytes32 data) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.setBytes32(_slot, data);
+    }
+
+    function load(Bytes32 storage str) internal view returns (bytes32 value) {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        value = storageContract.getBytes32(_slot);
+    }
+
+    function store(Address storage str, address data) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.setAddress(_slot, data);
+    }
+
+    function load(Address storage str) internal view returns (address value) {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        value = storageContract.getAddress(_slot);
+    }
+}
+
+contract RDataStorage {
+    mapping(bytes32 => mapping(address account => string)) internal stringStorage;
+    mapping(bytes32 => mapping(address account => bytes)) internal bytesStorage;
+    mapping(bytes32 => mapping(address account => uint256)) internal uintStorage;
+    mapping(bytes32 => mapping(address account => int256)) internal intStorage;
+    mapping(bytes32 => mapping(address account => address)) internal addressStorage;
+    mapping(bytes32 => mapping(address account => bool)) internal booleanStorage;
+    mapping(bytes32 => mapping(address account => bytes32)) internal bytes32Storage;
 
     function getAddress(bytes32 _key) external view returns (address r) {
         return addressStorage[_key][msg.sender];
