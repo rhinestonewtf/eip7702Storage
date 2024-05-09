@@ -30,6 +30,8 @@ library RData {
         string str;
     }
 
+    // NOTE: right now expects that the storage contract is etched to the address
+    // shall be replaced to prod address once on testnet / mainnet
     RDataStorage constant storageContract = RDataStorage(address(0x4411BBAA));
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
