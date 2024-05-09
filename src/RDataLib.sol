@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {RDataStorage} from "./RDataStorage.sol";
+import { RDataStorage } from "./RDataStorage.sol";
 
 /**
  * @title RData
