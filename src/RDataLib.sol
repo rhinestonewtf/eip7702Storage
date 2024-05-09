@@ -84,6 +84,39 @@ library RData {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                           Integer                          */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+
+    function add(Uint256 storage str, uint256 data) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.addUint(_slot, data);
+    }
+
+    function sub(Uint256 storage str, uint256 data) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.subUint(_slot, data);
+    }
+
+    function increase(Uint256 storage str) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.incUint(_slot);
+    }
+
+    function decrease(Uint256 storage str) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.decUint(_slot);
+    }
+
     function store(Uint256 storage str, uint256 data) internal {
         bytes32 _slot;
         assembly {
@@ -133,6 +166,14 @@ library RData {
             _slot := str.slot
         }
         value = storageContract.getBool(_slot);
+    }
+
+    function toggle(Bool storage str) internal {
+        bytes32 _slot;
+        assembly {
+            _slot := str.slot
+        }
+        storageContract.toggleBool(_slot);
     }
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/

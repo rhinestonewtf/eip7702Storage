@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
+import "forge-std/console2.sol";
+
 /**
  * @title RDataStorage
  * External storage contract to allow EOAs to store data when using EIP7702
@@ -15,6 +17,9 @@ contract RDataStorage {
     mapping(bytes32 key => mapping(address account => bool value)) public booleanStorage;
     mapping(bytes32 key => mapping(address account => bytes32 value)) public bytes32Storage;
 
+    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
+    /*                        Get Values                          */
+    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
     function getAddress(bytes32 _key) external view returns (address r) {
         return addressStorage[_key][msg.sender];
     }
@@ -43,6 +48,9 @@ contract RDataStorage {
         return bytes32Storage[_key][msg.sender];
     }
 
+    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
+    /*                        Set Values                          */
+    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
     function setAddress(bytes32 _key, address _value) external {
         addressStorage[_key][msg.sender] = _value;
     }
@@ -71,6 +79,9 @@ contract RDataStorage {
         bytes32Storage[_key][msg.sender] = _value;
     }
 
+    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
+    /*                       Delete Values                        */
+    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
     function deleteAddress(bytes32 _key) external {
         delete addressStorage[_key][msg.sender];
     }
@@ -97,5 +108,28 @@ contract RDataStorage {
 
     function deleteBytes32(bytes32 _key) external {
         delete bytes32Storage[_key][msg.sender];
+    }
+
+    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
+    /*                         Operation                          */
+    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
+    function addUint(bytes32 _key, uint256 _value) external {
+        uintStorage[_key][msg.sender] += _value;
+    }
+
+    function subUint(bytes32 _key, uint256 _value) external {
+        uintStorage[_key][msg.sender] -= _value;
+    }
+
+    function incUint(bytes32 _key) external {
+        uintStorage[_key][msg.sender] += 1;
+    }
+
+    function decUint(bytes32 _key) external {
+        uintStorage[_key][msg.sender] -= 1;
+    }
+
+    function toggleBool(bytes32 _key) external {
+        booleanStorage[_key][msg.sender] = !booleanStorage[_key][msg.sender];
     }
 }

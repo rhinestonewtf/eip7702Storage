@@ -6,13 +6,13 @@ import "src/RDataStorage.sol";
 import "src/RdataLib.sol";
 
 contract StorageTest is Test {
-    using RData for RData.Address;
-    using RData for RData.Bytes32;
+    using RData for *;
 
     RDataStorage storageContract;
 
     mapping(address module => RData.Address) internal addresses;
     mapping(address module => RData.Bytes32) internal bytes32s;
+    mapping(address module => RData.Uint256) internal uints;
 
     function setUp() public virtual {
         storageContract = new RDataStorage();
@@ -34,5 +34,24 @@ contract StorageTest is Test {
         _value = bytes32s[key].load();
 
         assertEq(value, _value);
+    }
+
+    function test_uints() public returns (uint256 _value) {
+        uint256 value = 10;
+        address key = makeAddr("key");
+        uints[key].store(value);
+        _value = uints[key].load();
+
+        assertEq(value, _value);
+
+        uints[key].add(10);
+        _value = uints[key].load();
+        assertEq(value + 10, _value);
+        uints[key].increase();
+        _value = uints[key].load();
+        assertEq(value + 11, _value);
+        uints[key].decrease();
+        _value = uints[key].load();
+        assertEq(value + 10, _value);
     }
 }
