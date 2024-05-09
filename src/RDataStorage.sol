@@ -2,6 +2,8 @@
 pragma solidity >=0.8.0;
 
 /**
+ * @title RDataStorage
+ * External storage contract to allow EOAs to store data when using EIP7702
  * @author rhinestone | zeroknots.eth
  */
 contract RDataStorage {

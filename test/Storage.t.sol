@@ -35,5 +35,4 @@ contract StorageTest is Test {
 
         assertEq(value, _value);
     }
-
 }
