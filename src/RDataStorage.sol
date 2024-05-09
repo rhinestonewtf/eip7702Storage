@@ -7,13 +7,13 @@ pragma solidity >=0.8.0;
  * @author rhinestone | zeroknots.eth
  */
 contract RDataStorage {
-    mapping(bytes32 => mapping(address account => string)) internal stringStorage;
-    mapping(bytes32 => mapping(address account => bytes)) internal bytesStorage;
-    mapping(bytes32 => mapping(address account => uint256)) internal uintStorage;
-    mapping(bytes32 => mapping(address account => int256)) internal intStorage;
-    mapping(bytes32 => mapping(address account => address)) internal addressStorage;
-    mapping(bytes32 => mapping(address account => bool)) internal booleanStorage;
-    mapping(bytes32 => mapping(address account => bytes32)) internal bytes32Storage;
+    mapping(bytes32 key => mapping(address account => string value)) public stringStorage;
+    mapping(bytes32 key => mapping(address account => bytes value)) public bytesStorage;
+    mapping(bytes32 key => mapping(address account => uint256 value)) public uintStorage;
+    mapping(bytes32 key => mapping(address account => int256 value)) public intStorage;
+    mapping(bytes32 key => mapping(address account => address value)) public addressStorage;
+    mapping(bytes32 key => mapping(address account => bool value)) public booleanStorage;
+    mapping(bytes32 key => mapping(address account => bytes32 value)) public bytes32Storage;
 
     function getAddress(bytes32 _key) external view returns (address r) {
         return addressStorage[_key][msg.sender];
